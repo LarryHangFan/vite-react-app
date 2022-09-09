@@ -1,16 +1,37 @@
 import Footer from '@/components/Footer';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './index.module.less';
-import { Button, Checkbox, Form, Input, Card } from 'antd';
+import { Button, Checkbox, Form, Input, Card, message } from 'antd';
+import { loginApi } from '@/mock/user';
+import { useNavigate } from "react-router-dom"
 
 const Login: React.FC = () => {
+  const navigate = useNavigate()
+  const [loginLoading, setLoginLoading] = useState(false)
+
   const onFinish = (values: any) => {
     console.log('Success:', values);
+    login({
+      userName: values.username,
+      password: values.password
+    })
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
+
+  const login = async (data: { userName: string, password: string }) => {
+    setLoginLoading(true)
+    const res = await loginApi(data)
+    setLoginLoading(false)
+    console.log(res)
+    if (res.code === 200) {
+      navigate('/')
+    } else {
+      message.error(res.msg)
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -50,7 +71,7 @@ const Login: React.FC = () => {
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button style={{ width: '100%' }} type="primary" htmlType="submit">
+              <Button loading={loginLoading} style={{ width: '100%' }} type="primary" htmlType="submit">
                 登陆
               </Button>
             </Form.Item>
