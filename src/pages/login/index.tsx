@@ -4,13 +4,14 @@ import styles from './index.module.less';
 import { Button, Checkbox, Form, Input, Card, message } from 'antd';
 import { loginApi } from '@/mock/user';
 import { useNavigate } from "react-router-dom"
+import { userStore } from '@/store/modules/user';
 
 const Login: React.FC = () => {
   const navigate = useNavigate()
+  const { setUserInfo, setToken } = userStore
   const [loginLoading, setLoginLoading] = useState(false)
 
   const onFinish = (values: any) => {
-    console.log('Success:', values);
     login({
       userName: values.username,
       password: values.password
@@ -27,6 +28,8 @@ const Login: React.FC = () => {
     setLoginLoading(false)
     console.log(res)
     if (res.code === 200) {
+      setToken(res.data.token)
+      setUserInfo(res.data.userInfo)
       navigate('/')
     } else {
       message.error(res.msg)
