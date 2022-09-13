@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
     "target": "ESNext",// 指定ECMAScript目标版本
     "useDefineForClassFields": true,//此标志用作迁移到即将推出的类字段标准版本的一部分
     "lib": ["DOM", "DOM.Iterable", "ESNext"],//用于指定需要包含的模块，只有在这里列出的模块的声明文件才会被加载
@@ -20,6 +21,6 @@
       "@/*": ["*"], // 模块名到基于 baseUrl的路径映射的列表
     },
   },
-  "include": ["src"],
+  "include": ["src","**/*.ts", "**/*.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
