@@ -33,6 +33,7 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         javascriptEnabled: true, // 支持内联 JavaScript
+        additionalData: `@import "${path.resolve(__dirname, 'src/assets/styles/common.less')}";`
       }
     }
   },

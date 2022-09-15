@@ -1,4 +1,3 @@
-import Footer from '@/components/Footer';
 import React, { useState } from 'react';
 import styles from './index.module.less';
 import { Button, Checkbox, Form, Input, Card, message } from 'antd';
@@ -29,7 +28,6 @@ const Login: React.FC = () => {
     console.log(res)
     if (res.code === 200) {
       userStore.setToken(res.data.token)
-      await getUserInfoApi()
       userStore.setUserInfo(res.data.userInfo)
       navigate('/')
     } else {
@@ -82,7 +80,6 @@ const Login: React.FC = () => {
           </Form>
         </Card>
       </div>
-      <Footer />
     </div>
   );
 };

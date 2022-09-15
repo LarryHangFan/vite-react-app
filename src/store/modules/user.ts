@@ -13,6 +13,9 @@ export const userStore = makeAutoObservable({
       localStorage.removeItem('TOKEN')
     }
   },
+  getToken(): string {
+    return this.token || localStorage.getItem('TOKEN') || ''
+  },
   setUserInfo(user: any) {
     this.userInfo = user
   }
