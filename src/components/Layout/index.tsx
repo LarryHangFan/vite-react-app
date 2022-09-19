@@ -9,7 +9,7 @@ interface Props {
   children?: Node
 }
 
-const App = (props: Props) => (
+const LayoutApp = (props: Props) => (
   <Layout style={{
     minHeight: '100vh',
     flexDirection: 'row'
@@ -33,4 +33,4 @@ const App = (props: Props) => (
   </Layout>
 );
 
-export default App;
+export default LayoutApp;
