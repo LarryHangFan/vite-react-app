@@ -7,6 +7,7 @@ import '../index.less'
 import { BaseRouteObject } from "@/router/type";
 import { ItemType } from "antd/lib/menu/hooks/useItems";
 import { Navigate, useNavigate } from "react-router-dom";
+import { sysStore } from '@/store/modules/sys'
 
 const BaseSider: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -73,12 +74,12 @@ const BaseSider: React.FC = () => {
         theme="dark"
         inlineCollapsed={collapsed}
         items={menuItems}
-        onSelect={({ keyPath }) => {
+        onSelect={({ item, key, selectedKeys, domEvent, keyPath }) => {
+          sysStore.setKeyPaths(keyPath)
           let paths: string[] = []
           for (let item of keyPath.reverse()) {
             paths.push(item.split('-&&||-')[0])
           }
-          console.log(paths.join('/'))
           navigate("/" + paths.join('/'), {
             replace: false,
             state: {}

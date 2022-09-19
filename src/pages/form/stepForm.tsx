@@ -1,4 +1,4 @@
-import ContentWrap from '@/components/ContentWrap';
+import ContentWrap from '@/components/Content/Wrap';
 import { Button, Form, Input, message, Select, Steps } from 'antd';
 import React, { useState } from 'react';
 const { Step } = Steps;

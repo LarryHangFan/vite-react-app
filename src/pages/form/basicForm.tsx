@@ -14,7 +14,7 @@ import {
   Checkbox,
   Upload,
 } from 'antd';
-import ContentWrap from '@/components/ContentWrap';
+import ContentWrap from '@/components/Content/Wrap';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 

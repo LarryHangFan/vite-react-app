@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
+// makeAutoObservable 中的所有方法都会被处理成 action。
 export const userStore = makeAutoObservable({
   token: '',
   userInfo: '',

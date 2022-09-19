@@ -1,8 +1,9 @@
-import { Breadcrumb, Layout, Menu } from 'antd';
+import { Layout, Menu } from 'antd';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import BaseHeader from './Header';
 import BaseSider from './Sider';
+import Breadcrumb from '@/components/Content/Breadcrumb'
 const { Header, Content, Footer } = Layout;
 
 interface Props {
@@ -20,6 +21,7 @@ const LayoutApp = (props: Props) => (
     }}>
       <BaseHeader />
       <Content className='ant-base-content'>
+        <Breadcrumb />
         <Outlet />
       </Content>
       <Footer

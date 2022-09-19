@@ -2,7 +2,6 @@ import Login from "@/pages/login"
 import Layout from '@/components/Layout'
 import IndexPage from '@/pages/index/index'
 import { BaseRouteObject, RouteItem } from './type'
-import Test from "@/pages/test"
 import { Navigate, RouteObject } from "react-router-dom"
 import ErrorPage from "@/pages/error/404"
 import BasicForm from '@/pages/form/basicForm'

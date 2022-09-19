@@ -76,7 +76,6 @@ export const guardRoute = (routes: BaseRouteObject[]): any => {
         routeNavs.push(item)
       }
     }
-    console.log(routeNavs)
     return routeNavs
   }
 

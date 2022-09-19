@@ -44,7 +44,7 @@ const App = () => (
         key="tags"
         render={(tags) => (
           <>
-            {tags.map((tag) => (
+            {tags.map((tag: any) => (
               <Tag color="blue" key={tag}>
                 {tag}
               </Tag>
