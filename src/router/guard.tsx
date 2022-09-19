@@ -84,6 +84,7 @@ export const guardRoute = (routes: BaseRouteObject[]): any => {
       {
         RouteNav(delayeringRoutes(deepClone(routes)))
       }
+      <Route path="*" element={<Navigate to='/404' />} />
     </Routes>
     // <>
     //   <Routes>
