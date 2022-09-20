@@ -7,28 +7,31 @@ import StepForm from "@/pages/form/stepForm";
 import { LayoutContext } from "antd/lib/layout/layout";
 import { BaseRouteObject } from "./type";
 import { deepClone } from "@/utils/common";
-
+import { useObserver } from 'mobx-react-lite';
 export const guardRoute = (routes: BaseRouteObject[]): any => {
-  const [isLogin, setIsLogin] = useState(true)
-  useEffect(() => {
-    setIsLogin(userStore.getToken() ? true : false)
-  }, [])
+  const [isLogin, setIsLogin] = useState(userStore.getToken() ? true : false)
+  // useEffect(() => {
+  //   setIsLogin(userStore.getToken() ? true : false)
+  // }, [])
   //请求页面路径需要验证 && 没有登录 
   const RouteNav = (param: BaseRouteObject[]) => {
     return (
       // 一级路由
       param.map((item: BaseRouteObject, index: number) => {
-        return item.path && (
-          <Route
+        return useObserver(() => {
+          return item.path && (<Route
             path={item.path}
-            element={!isLogin ? <Navigate to='/login' replace={true} /> : item.element}
+            element={
+              !userStore.getToken ? <Navigate to='/login' replace={true} /> :
+                item.element}
             key={`${item?.path + index}`}>
             {
               // 二级路由
               item?.children && RouteNav(item.children)
             }
-          </Route>
-        )
+          </Route>)
+        })
+
       })
     )
   }
