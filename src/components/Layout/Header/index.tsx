@@ -6,12 +6,22 @@ import '../index.less'
 import { FullscreenExitOutlined, FullscreenOutlined, QuestionCircleOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons"
 import { useState } from "react"
 import screenfull from "screenfull"
-import { Link } from "react-router-dom"
+import { userStore } from '@/store/modules/user'
+import { useNavigate } from "react-router-dom"
 const BaseHeader: React.FC = () => {
   const [full, setFull] = useState<boolean>(false)
+  const navigate = useNavigate()
+  const logoutApi = () => {
+    userStore.logout()
+    navigate('/login', {
+      replace: true,
+      state: {}
+    })
+  }
   const handleMenuClick: MenuProps['onClick'] = e => {
-    message.info('Click on menu item.');
-    console.log('click', e);
+    if (e.key == '2') {
+      logoutApi()
+    }
   };
   const menu = (
     <Menu
@@ -34,12 +44,12 @@ const BaseHeader: React.FC = () => {
     setFull(!full)
     screenfull.toggle()
   }
-  return <Header className="ant-base-header" style={{ color: '#fff', }}>
+  return <Header className="ant-base-header pl24 pr24" style={{ color: '#fff', }}>
     <div className="f-sb" style={{ height: '100%' }}>
       <div className="f-fs f-ac" style={{ height: '100%' }}>
         <Image preview={false} className="f-fs f-ac" height={35} src={logo} />
         <h1 className="headr-title">
-          Ant Pro
+          管理系统
         </h1>
       </div>
       <div className="f-fs f-ac" style={{ lineHeight: '100%' }}>

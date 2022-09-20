@@ -7,31 +7,24 @@ import StepForm from "@/pages/form/stepForm";
 import { LayoutContext } from "antd/lib/layout/layout";
 import { BaseRouteObject } from "./type";
 import { deepClone } from "@/utils/common";
-import { useObserver } from 'mobx-react-lite';
+import { Observer, useObserver } from 'mobx-react-lite';
 export const guardRoute = (routes: BaseRouteObject[]): any => {
-  const [isLogin, setIsLogin] = useState(userStore.getToken() ? true : false)
-  // useEffect(() => {
-  //   setIsLogin(userStore.getToken() ? true : false)
-  // }, [])
-  //请求页面路径需要验证 && 没有登录 
+
   const RouteNav = (param: BaseRouteObject[]) => {
     return (
       // 一级路由
       param.map((item: BaseRouteObject, index: number) => {
-        return useObserver(() => {
-          return item.path && (<Route
-            path={item.path}
-            element={
-              !userStore.getToken ? <Navigate to='/login' replace={true} /> :
-                item.element}
-            key={`${item?.path + index}`}>
-            {
-              // 二级路由
-              item?.children && RouteNav(item.children)
-            }
-          </Route>)
-        })
-
+        return item?.path && <Route
+          path={item.path}
+          element={
+            !userStore.getToken ? <Navigate to='/login' replace={true} /> :
+              item.element}
+          key={`${item?.path + index}`}>
+          {
+            // 二级路由
+            item?.children && RouteNav(item.children)
+          }
+        </Route>
       })
     )
   }
@@ -48,7 +41,8 @@ export const guardRoute = (routes: BaseRouteObject[]): any => {
           let currentItem: BaseRouteObject = {
             path: item.path,
             element: item.element,
-            name: item.name
+            name: item.name,
+            index: item.index
           }
           // 添加至二级路由
           children.push(currentItem)
@@ -79,16 +73,22 @@ export const guardRoute = (routes: BaseRouteObject[]): any => {
         routeNavs.push(item)
       }
     }
+    console.log(routeNavs)
     return routeNavs
   }
 
   return (
-    <Routes>
+    <Observer>
       {
-        RouteNav(delayeringRoutes(deepClone(routes)))
+        () =>
+          <Routes>
+            {
+              RouteNav(delayeringRoutes(deepClone(routes)))
+            }
+            <Route path="*" element={<Navigate to='/404' />} />
+          </Routes>
       }
-      <Route path="*" element={<Navigate to='/404' />} />
-    </Routes>
+    </Observer>
     // <>
     //   <Routes>
     //     <Route path="/login" element={<>login</>}></Route>

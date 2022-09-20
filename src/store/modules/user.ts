@@ -1,11 +1,14 @@
-import { makeAutoObservable } from "mobx";
-
+import { LogoutOutlined } from "@ant-design/icons";
+import { configure, makeAutoObservable } from "mobx";
+import { UserStoreType } from "../type";
+// 使用该配置，可以将 Proxy 降级为 Object.defineProperty 
+configure({ useProxies: "never" });
 // makeAutoObservable 中的所有方法都会被处理成 action。
-export const userStore = makeAutoObservable({
+export const userStore = makeAutoObservable<UserStoreType>({
   token: '',
-  userInfo: '',
+  userInfo: {},
   // 登录成功保存token
-  setToken(token: string) {
+  setToken(token?: string) {
     if (token) {
       this.token = token
       localStorage.setItem('TOKEN', token)
@@ -17,7 +20,11 @@ export const userStore = makeAutoObservable({
   getToken(): string {
     return this.token || localStorage.getItem('TOKEN') || ''
   },
-  setUserInfo(user: any) {
+  setUserInfo(user?: any) {
     this.userInfo = user
+  },
+  logout() {
+    this.setToken()
+    this.setUserInfo()
   }
 })

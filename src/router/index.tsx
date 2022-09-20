@@ -1,17 +1,11 @@
 import Login from "@/pages/login"
-import Layout from '@/components/Layout'
-import IndexPage from '@/pages/index/index'
-import { BaseRouteObject, RouteItem } from './type'
-import { Navigate, RouteObject } from "react-router-dom"
-import ErrorPage from "@/pages/error/404"
-import BasicForm from '@/pages/form/basicForm'
-import StepForm from '@/pages/form/stepForm'
-import ResultFail from '@/pages/result/fail'
-import ResultSuccess from '@/pages/result/success'
-import Error403 from "@/pages/result/403"
+import { BaseRouteObject } from './type'
+import { Navigate } from "react-router-dom"
 import { FormOutlined, HomeOutlined, OrderedListOutlined } from "@ant-design/icons"
-
-export const layoutRoutes: BaseRouteObject[] = [
+import SuspenseApp from "@/components/Suspense/index"
+import Layout from '@/components/Layout/index'
+import { userStore } from '@/store/modules/user'
+export const baseLayoutRoutes: BaseRouteObject[] = [
   {
     path: '/',
     name: '首页',
@@ -31,13 +25,13 @@ export const layoutRoutes: BaseRouteObject[] = [
       {
         path: 'step-form',
         name: '分步表单',
-        element: <StepForm />,
+        element: <SuspenseApp path='/pages/form/stepForm' />
       },
       {
         index: true,
         path: 'basic-form',
         name: '基础表单',
-        element: <BasicForm />
+        element: <SuspenseApp path='/pages/form/basicForm' />
       },
     ]
   },
@@ -57,13 +51,13 @@ export const layoutRoutes: BaseRouteObject[] = [
           {
             path: 'fail',
             name: '失败页',
-            element: <ResultFail />,
+            element: <SuspenseApp path='/pages/result/fail' />
           },
           {
             index: true,
             path: 'success',
             name: '成功页',
-            element: <ResultSuccess />
+            element: <SuspenseApp path='/pages/result/success' />
           },
         ]
       },
@@ -79,7 +73,7 @@ export const layoutRoutes: BaseRouteObject[] = [
             children: [
               {
                 path: '403',
-                element: <Error403 />,
+                element: <SuspenseApp path='/pages/result/403' />,
                 name: '403',
               },
             ]
@@ -93,16 +87,69 @@ export const firstRoutes: BaseRouteObject[] = [
   {
     path: 'login',
     name: '登陆页',
-    element: <Login />
+    element: <SuspenseApp path='/pages/login' />
   },
   {
     path: '404',
     name: '404',
-    element: <ErrorPage />
+    element:
+      <SuspenseApp path='/pages/error/404' />
   },
+]
+export const layoutRoutes: BaseRouteObject[] = [
+  ...baseLayoutRoutes
+]
+
+export const asyncRoutes: BaseRouteObject[] = [
+  {
+    path: 'skeleton',
+    element: <Layout />,
+    name: '骨架页',
+    meta: {
+      icon: <OrderedListOutlined />,
+      auth: 'skeleton'
+    },
+    children: [
+      {
+        path: 'index',
+        element: <SuspenseApp path='/pages/skeleton' />,
+        name: '',
+      },
+    ]
+  },
+  {
+    path: 'tree',
+    element: <Layout />,
+    name: '树形页',
+    meta: {
+      icon: <OrderedListOutlined />,
+      auth: 'tree'
+    },
+    children: [
+      {
+        index: true,
+        path: 'index',
+        element: <SuspenseApp path='/pages/tree' />,
+        name: '',
+      },
+    ]
+  }
 ]
 
 export const routes: BaseRouteObject[] = [
   ...layoutRoutes,
+  ...asyncRoutes,
   ...firstRoutes
 ]
+const getAsyncRoutes = () => {
+
+}
+export const getSiderRoutes = (): BaseRouteObject[] => {
+  console.log(userStore)
+  if (userStore?.userInfo?.authList) {
+    for (let key in userStore?.userInfo?.authList) {
+
+    }
+  }
+  return baseLayoutRoutes
+}

@@ -1,7 +1,7 @@
 import { AppstoreOutlined, ContainerOutlined, DesktopOutlined, FileOutlined, HomeOutlined, MailOutlined, MenuFoldOutlined, MenuUnfoldOutlined, PieChartOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 import Sider from "antd/lib/layout/Sider"
-import { layoutRoutes } from '@/router/index'
+import { getSiderRoutes } from '@/router/index'
 import { useEffect, useRef, useState } from "react";
 import '../index.less'
 import { BaseRouteObject } from "@/router/type";
@@ -32,7 +32,7 @@ const BaseSider: React.FC = () => {
       }
       return items
     }
-    return getItem(layoutRoutes)
+    return getItem(getSiderRoutes())
   }
 
   useEffect(() => {

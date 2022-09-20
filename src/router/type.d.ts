@@ -10,7 +10,8 @@ export interface RouteItem {
 export interface BaseRouteObject extends RouteObject {
   name: string,
   meta?: {
-    icon?: any
+    icon?: any,
+    auth?: string
   },
   children?: BaseRouteObject[]
 }

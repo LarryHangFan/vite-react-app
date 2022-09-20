@@ -44,8 +44,6 @@ const Login: React.FC = () => {
         >
           <Form
             name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
@@ -68,11 +66,11 @@ const Login: React.FC = () => {
               <Input />
             </Form.Item>
 
-            <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 1, span: 16 }}>
               <Checkbox>记住我</Checkbox>
             </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item >
               <Button loading={loginLoading} style={{ width: '100%' }} type="primary" htmlType="submit">
                 登陆
               </Button>
